@@ -717,21 +717,20 @@ namespace NiceHashMiner
             Dictionary<string, List<AlgorithmType>> nonBenchmarkedPerDevice = tuplePair.Item2;
             // Check if the user has run benchmark first
             if (!isBenchInit) {
-                List<ComputeDevice> enabledDevices = new List<ComputeDevice>();
-                HashSet<string> deviceNames = new HashSet<string>();
-                foreach (var cdev in ComputeDevice.AllAvaliableDevices) {
-                    if (cdev.Enabled && !deviceNames.Contains(cdev.Name)) {
-                        deviceNames.Add(cdev.Name);
-                        enabledDevices.Add(cdev);
+                // check devices without benchmarks		
+                foreach (var cdev in ComputeDevice.AllAvaliableDevices)
+                {
+                    bool Enabled = false;
+                    foreach (var algo in cdev.DeviceBenchmarkConfig.AlgorithmSettings)
+                    {
+                        if (algo.Value.BenchmarkSpeed > 0)
+                        {
+                            Enabled = true;
+                            break;
+                        }
                     }
+                    cdev.ComputeDeviceEnabledOption.IsEnabled = Enabled;
                 }
-                BenchmarkForm = new Form_Benchmark(
-                    BenchmarkPerformanceType.Quick,
-                    true);
-                SetChildFormCenter(BenchmarkForm);
-                BenchmarkForm.ShowDialog();
-                BenchmarkForm = null;
-                InitMainConfigGUIData();
             }
 
             // check if any device enabled
