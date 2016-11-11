@@ -70,7 +70,7 @@ namespace NiceHashMiner.Devices
             // #4 AMD query AMD from OpenCL devices, get serial and add devices
             QueryAMD();
             // #5 uncheck CPU if GPUs present, call it after we Query all devices
-            UncheckedCPU();
+            // UncheckedCPU();
             // add numberings to same devices
             if (ComputeDevice.AllAvaliableDevices.Count != ComputeDevice.UniqueAvaliableDevices.Count) {
                 // name count

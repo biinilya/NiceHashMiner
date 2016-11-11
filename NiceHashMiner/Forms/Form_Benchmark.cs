@@ -452,10 +452,6 @@ namespace NiceHashMiner.Forms {
             BenchmarkStoppedGUISettings();
             // check if all ok
             if(_benchmarkFailedAlgoPerDev.Count == 0) {
-                MessageBox.Show(
-                    International.GetText("FormBenchmark_Benchmark_Finish_Succes_MsgBox_Msg"),
-                    International.GetText("FormBenchmark_Benchmark_Finish_MsgBox_Title"),
-                    MessageBoxButtons.OK);
             } else {
                 var result = MessageBox.Show(
                     International.GetText("FormBenchmark_Benchmark_Finish_Fail_MsgBox_Msg"),

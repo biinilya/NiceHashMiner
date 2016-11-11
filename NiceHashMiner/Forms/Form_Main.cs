@@ -717,40 +717,21 @@ namespace NiceHashMiner
             Dictionary<string, List<AlgorithmType>> nonBenchmarkedPerDevice = tuplePair.Item2;
             // Check if the user has run benchmark first
             if (!isBenchInit) {
-                DialogResult result = MessageBox.Show(International.GetText("EnabledUnbenchmarkedAlgorithmsWarning"),
-                                                          International.GetText("Warning_with_Exclamation"),
-                                                          MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
-                if (result == System.Windows.Forms.DialogResult.Yes) {
-                    List<ComputeDevice> enabledDevices = new List<ComputeDevice>();
-                    HashSet<string> deviceNames = new HashSet<string>();
-                    foreach (var cdev in ComputeDevice.AllAvaliableDevices) {
-                        if (cdev.Enabled && !deviceNames.Contains(cdev.Name)) {
-                            deviceNames.Add(cdev.Name);
-                            enabledDevices.Add(cdev);
-                        }
+                List<ComputeDevice> enabledDevices = new List<ComputeDevice>();
+                HashSet<string> deviceNames = new HashSet<string>();
+                foreach (var cdev in ComputeDevice.AllAvaliableDevices) {
+                    if (cdev.Enabled && !deviceNames.Contains(cdev.Name)) {
+                        deviceNames.Add(cdev.Name);
+                        enabledDevices.Add(cdev);
                     }
-                    BenchmarkForm = new Form_Benchmark(
-                        BenchmarkPerformanceType.Standard,
-                        true);
-                    SetChildFormCenter(BenchmarkForm);
-                    BenchmarkForm.ShowDialog();
-                    BenchmarkForm = null;
-                    InitMainConfigGUIData();
-                } else if (result == System.Windows.Forms.DialogResult.No) {
-                    // check devices without benchmarks
-                    foreach (var cdev in ComputeDevice.AllAvaliableDevices) {
-                        bool Enabled = false;
-                        foreach (var algo in cdev.DeviceBenchmarkConfig.AlgorithmSettings) {
-                            if (algo.Value.BenchmarkSpeed > 0) {
-                                Enabled = true;
-                                break;
-                            }
-                        }
-                        cdev.ComputeDeviceEnabledOption.IsEnabled = Enabled;
-                    }
-                } else {
-                    return;
                 }
+                BenchmarkForm = new Form_Benchmark(
+                    BenchmarkPerformanceType.Quick,
+                    true);
+                SetChildFormCenter(BenchmarkForm);
+                BenchmarkForm.ShowDialog();
+                BenchmarkForm = null;
+                InitMainConfigGUIData();
             }
 
             // check if any device enabled
