@@ -486,7 +486,8 @@ namespace NiceHashMiner.Forms {
 
         public void OnBenchmarkComplete(bool success, string status) {
             if (!_inBenchmark) return;
-            this.Invoke((MethodInvoker)delegate {
+            // this.Invoke((MethodInvoker)delegate 
+            {
                 _bechmarkedSuccessCount += success ? 1 : 0;
                 bool rebenchSame = false;
                 if(success && __CPUBenchmarkStatus != null && CPUAlgos.Contains(_currentAlgorithm.NiceHashID)) {
@@ -529,7 +530,7 @@ namespace NiceHashMiner.Forms {
                 } else {
                     NextBenchmark();
                 }
-            });
+            }
         }
 
         #region Benchmark progress GUI stuff
