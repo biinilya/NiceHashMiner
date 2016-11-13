@@ -324,21 +324,12 @@ namespace NiceHashMiner
 
             // no bots please
             if (ConfigManager.Instance.GeneralConfig.hwidLoadFromFile && !ConfigManager.Instance.GeneralConfig.hwidOK) {
-                var result = MessageBox.Show("NiceHash Miner has detected change of hardware ID. If you did not download and install NiceHash Miner, your computer may be compromised. In that case, we suggest you to install an antivirus program or reinstall your Windows.\r\n\r\nContinue with NiceHash Miner?",
-                    //International.GetText("Form_Main_msgbox_anti_botnet_msgbox"),
-                    International.GetText("Warning_with_Exclamation"),
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (result == System.Windows.Forms.DialogResult.No) {
-                    Close();
-                    return;
-                } else {
-                    // users agrees he installed it so commit changes
-                    ConfigManager.Instance.GeneralConfig.Commit();
-                }
-            } else {
-                if (ConfigManager.Instance.GeneralConfig.AutoStartMining) {
-                    buttonStartMining_Click(null, null);
-                }
+                // users agrees he installed it so commit changes
+                ConfigManager.Instance.GeneralConfig.Commit();
+            }
+            if (ConfigManager.Instance.GeneralConfig.AutoStartMining)
+            {
+                buttonStartMining_Click(null, null);
             }
         }
 
